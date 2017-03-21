@@ -1,4 +1,4 @@
-##SNMP Tree Editor
+## SNMP Tree Editor
 
 SNMP tree editor bude program vytvoreny jako semestralni prace na predmet UUR
 
