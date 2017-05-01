@@ -1,0 +1,43 @@
+buildscript {
+    ext.kotlin_version = '1.1.1'
+    ext.coroutines_version = '1.14'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+kotlin {
+    experimental {
+        coroutines 'enable'
+    }
+}
+
+mainClassName = 'Main'
+
+defaultTasks 'run'
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-runtime:$kotlin_version"
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.14'
+    testCompile 'junit:junit:4.11'
+    testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = "2.7"
+}
+

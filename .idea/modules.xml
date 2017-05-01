@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/snmp_tree_editor.iml" filepath="$PROJECT_DIR$/snmp_tree_editor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/snmp_tree_editor.iml" filepath="$PROJECT_DIR$/.idea/modules/snmp_tree_editor.iml" />
     </modules>
   </component>
 </project>
