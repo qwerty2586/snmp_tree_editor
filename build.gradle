@@ -20,9 +20,15 @@ kotlin {
     }
 }
 
-mainClassName = 'Main'
+sourceSets {
+    main {
+        kotlin {
+            srcDirs = ['src']
+        }
+    }
+}
 
-defaultTasks 'run'
+mainClassName = 'Main'
 
 repositories {
     mavenCentral()

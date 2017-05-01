@@ -1,3 +1,4 @@
+import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
 
 /**
@@ -8,5 +9,12 @@ import javafx.scene.control.TableView
 class NetworkNode( var address:String,var community:String)
 
 class NetworkTable:TableView<NetworkNode>() {
+
+    val dnsColumn = TableColumn<NetworkNode,String>("DNS")
+    val ipColumn = TableColumn<NetworkNode,String>("IP")
+
+    init {
+        columns.addAll(dnsColumn,ipColumn)
+    }
 
 }
