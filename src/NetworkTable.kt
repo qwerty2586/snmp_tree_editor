@@ -1,45 +1,95 @@
+
 import javafx.beans.property.SimpleStringProperty
-import javafx.beans.property.StringProperty
-import javafx.beans.value.ObservableValue
 import javafx.collections.FXCollections
-import javafx.collections.ObservableList
 import javafx.scene.control.TableColumn
 import javafx.scene.control.TableView
-import java.util.*
+import javafx.scene.control.cell.TextFieldTableCell
+import javafx.util.StringConverter
+import java.net.InetAddress
 
 /**
  * Created by qwerty on 1. 5. 2017.
  */
 
 
-class NetworkNode( _address:String,var _community:String) {
-    var address = SimpleStringProperty()
-        set(value) {
-            ip = value
-            dns = value
-        }
+class NetworkNode(_address: String, var _community: String) {
+    // var address = SimpleStringProperty()
+
+
     var ip = SimpleStringProperty()
-  //      set(value) {address = value}
     var dns = SimpleStringProperty()
-  //      set(value) {address = value}
     var community = SimpleStringProperty()
+
     init {
-        address.value = _address
+        parseNewAddress(_address)
         community.value = _community
+
+        ip.bindBidirectional(dns, object :StringConverter<String>() {
+            override fun toString(string: String?): String {
+                if (string==null) return ""
+                return getIP(string)
+            }
+
+            override fun fromString(string: String?): String {
+                if (string==null) return ""
+                return getDNS(string)
+            }
+
+        })
+        dns.bindBidirectional(ip, object :StringConverter<String>() {
+            override fun toString(string: String?): String {
+                if (string==null) return ""
+                return getDNS(string)
+            }
+
+            override fun fromString(string: String?): String {
+                if (string==null) return ""
+                return getIP(string)
+            }
+
+        })
+    }
+
+    fun parseNewAddress(s: String) {
+        parseValues = false
+        ip.value = s
+        dns.value = s
+    }
+
+}
+
+
+fun getIP(s : String) : String {
+    if (s == "") return ""
+    try {
+        return InetAddress.getByName(s).hostAddress
+    } catch (e : Exception) {
+        return s
+    }
+}
+
+fun getDNS(s : String) : String {
+    if (s == "") return ""
+    try {
+        return InetAddress.getByName(s).hostName
+    } catch (e : Exception) {
+        return s
     }
 }
 
 
 val inserts = FXCollections.observableArrayList<NetworkNode>(arrayListOf(
-        NetworkNode("swkralovicka43","public")
+        NetworkNode("swkralovicka43", "public")
 ))
 
 
+var parseValues = false
 
-class NetworkTable:TableView<NetworkNode>() {
+class NetworkTable : TableView<NetworkNode>() {
 
-    val dnsColumn = TableColumn<NetworkNode,String>("DNS")
-    val ipColumn = TableColumn<NetworkNode,String>("IP")
+
+    val dnsColumn = TableColumn<NetworkNode, String>("DNS")
+    val ipColumn = TableColumn<NetworkNode, String>("IP")
 
     init {
 
@@ -47,11 +97,18 @@ class NetworkTable:TableView<NetworkNode>() {
         dnsColumn.setCellValueFactory { v -> v.value.dns }
         ipColumn.setCellValueFactory { v -> v.value.ip }
 
+
+        // dnsColumn.setCellFactory ( TextFieldTableCell.forTableColumn<NetworkNode, String> ()
+
+
+        dnsColumn.cellFactory =TextFieldTableCell.forTableColumn()
+        ipColumn.cellFactory =TextFieldTableCell.forTableColumn()
+
         isEditable = true
         ipColumn.isEditable = true
         dnsColumn.isEditable = true
 
-        columns.addAll(dnsColumn,ipColumn)
+        columns.addAll(dnsColumn, ipColumn)
 
         items.addAll(inserts)
     }
