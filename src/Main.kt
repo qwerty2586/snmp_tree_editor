@@ -18,8 +18,8 @@ class Main : Application() {
 
         root.center = NetworkTable()
         root.bottom = Label("hello")
-        primaryStage.title = "Hello World!!!"
-        primaryStage.scene = Scene(root, 300.0, 275.0)
+        primaryStage.title = "Device Table"
+        primaryStage.scene = Scene(root, 500.0, 275.0)
         primaryStage.show()
     }
 
