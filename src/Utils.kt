@@ -8,12 +8,12 @@ val DEVICE_LIST_FILE ="./.devicelist"
 
 val SNMP_WALK_BINARY_PATH =
         if (com.sun.javafx.util.Utils.isWindows()) "snmp/win/snmpwalk.exe"
-        else if (com.sun.javafx.util.Utils.isUnix()) "./snmp/linux/snmpwalk"
+        else if (com.sun.javafx.util.Utils.isUnix()) "snmpwalk"
         else ""
 
 val SNMP_SET_BINARY_PATH =
         if (com.sun.javafx.util.Utils.isWindows()) "snmp/win/snmpset.exe"
-        else if (com.sun.javafx.util.Utils.isUnix()) "./snmp/linux/snmpset"
+        else if (com.sun.javafx.util.Utils.isUnix()) "snmpset"
         else ""
 
 fun alert(type: Alert.AlertType, title: String = "", headerText: String = "", text: String = ""): Alert {

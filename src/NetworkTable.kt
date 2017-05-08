@@ -147,21 +147,21 @@ class NetworkTable : TableView<NetworkNode>() {
         if (address==null) return
         val treeWindow = TreeWindow(address)
         treeWindow.show()
-        treeWindow.insertNodesFromString(java.lang.String.join("\n", Files.readAllLines(Paths.get("doc/swkralovicka43_snmpwalk_v2.txt"))))
+        //treeWindow.insertNodesFromString(java.lang.String.join("\n", Files.readAllLines(Paths.get("doc/swkralovicka43_snmpwalk_v2.txt"))))
 
-/*
+
         var consoleOutput = ""
         val console = ConsoleWindow()
         console.scene.window.x = treeWindow.scene.window.x + 200
         console.scene.window.y = treeWindow.scene.window.y + 200
         // aby nestartli hned nad sebou
         console.show()
-        console.runTaskWithOutput(listOf(SNMP_WALK_BINARY_PATH, "-v", "2c", "-c", community, address),{
+        console.runTaskWithOutput(listOf(SNMP_WALK_BINARY_PATH, "-v", "2c", "-c", community!!, address!!),{
             consoleOutput = it
             console.close()
             treeWindow.insertNodesFromString(consoleOutput)
         })
-*/
+
 
     }
 
