@@ -7,6 +7,8 @@ import javafx.scene.control.cell.TextFieldTableCell
 import javafx.util.Callback
 import javafx.util.StringConverter
 import java.net.InetAddress
+import java.nio.file.Files
+import java.nio.file.Paths
 
 
 /**
@@ -62,7 +64,6 @@ class NetworkNode(_address: String, var _community: String) {
 
 
 fun getIP(s : String) : String {
-    println("ip")
     if (s == "") return ""
     try {
         return InetAddress.getByName(s).hostAddress
@@ -72,7 +73,6 @@ fun getIP(s : String) : String {
 }
 
 fun getDNS(s : String) : String {
-    println("dns")
     if (s == "") return ""
     try {
         return InetAddress.getByName(s).hostName
@@ -82,9 +82,7 @@ fun getDNS(s : String) : String {
 }
 
 
-val inserts = FXCollections.observableArrayList<NetworkNode>(arrayListOf(
-        NetworkNode("swkralovicka43", "public")
-))
+val inserts = FXCollections.observableArrayList<NetworkNode>(arrayListOf())
 
 
 var parseValues = false
@@ -125,7 +123,7 @@ class NetworkTable : TableView<NetworkNode>() {
             }
             val openTreeItem = MenuItem("Tree")
             openTreeItem.setOnAction {
-                openTree(selectionModel.selectedItem.ip.value)
+                openTree(selectionModel.selectedItem.ip.value,selectionModel.selectedItem.community.value )
             }
 
             contextMenu.getItems().addAll(openTreeItem,removeMenuItem)
@@ -136,7 +134,7 @@ class NetworkTable : TableView<NetworkNode>() {
             )
             row.setOnMousePressed { event ->
                 if (event.isPrimaryButtonDown && event.clickCount == 2) {
-                    openTree(row.item?.ip?.value)
+                    openTree(row.item?.ip?.value,row.item?.community?.value)
                 }
             }
 
@@ -145,12 +143,25 @@ class NetworkTable : TableView<NetworkNode>() {
 
     }
 
-    private fun  openTree(address: String?) {
+    private fun  openTree(address: String?, community: String?) {
         if (address==null) return
+        val treeWindow = TreeWindow(address)
+        treeWindow.show()
+        treeWindow.insertNodesFromString(java.lang.String.join("\n", Files.readAllLines(Paths.get("doc/swkralovicka43_snmpwalk_v2.txt"))))
+
+/*
         var consoleOutput = ""
         val console = ConsoleWindow()
+        console.scene.window.x = treeWindow.scene.window.x + 200
+        console.scene.window.y = treeWindow.scene.window.y + 200
+        // aby nestartli hned nad sebou
         console.show()
-        console.runTaskWithOutput(listOf("snmp/win/snmpwalk.exe", "-v", "2c", "-c", "public", "swkralovicka43"),{ consoleOutput = it ;console.close()})
+        console.runTaskWithOutput(listOf(SNMP_WALK_BINARY_PATH, "-v", "2c", "-c", community, address),{
+            consoleOutput = it
+            console.close()
+            treeWindow.insertNodesFromString(consoleOutput)
+        })
+*/
 
     }
 
