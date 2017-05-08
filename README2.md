@@ -30,11 +30,11 @@
                                    
 ## Snimky obrazovek
 
- #####beh konzole   
+ ##### beh konzole   
 
  ![beh_konzole](./doc/screenshots/console_run.png)
  
- ####po nacteni stromu
+ #### po nacteni stromu
  
  ![strom_a_hlavni_okno](./doc/screenshots/tree_and_main.png)
  
