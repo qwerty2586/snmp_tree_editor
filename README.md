@@ -1,5 +1,7 @@
 ## SNMP Tree Editor
 
+[cast 2](./README.nmd)
+
 SNMP tree editor bude program vytvoreny jako semestralni prace na predmet UUR
 
 bude umoznovat

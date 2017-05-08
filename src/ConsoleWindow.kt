@@ -29,7 +29,7 @@ class ConsoleWindow : Stage() {
 
     fun runTaskWithOutput(program: List<String>, afterTaskJob: (output : String) -> Unit) {
         textArea.clear()
-        title = program.joinToString(" ")
+        title = "Console Window - " + program.joinToString(" ")
         async(CommonPool) {
             val pb = ProcessBuilder(program.toList())
             val process = pb.start()
