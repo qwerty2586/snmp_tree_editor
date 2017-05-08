@@ -1,6 +1,6 @@
 ## SNMP Tree Editor
 
-[cast 2](./README.nmd)
+[cast 2](./README2.md)
 
 SNMP tree editor bude program vytvoreny jako semestralni prace na predmet UUR
 
