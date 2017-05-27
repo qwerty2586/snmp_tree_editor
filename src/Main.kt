@@ -13,7 +13,7 @@ import java.nio.file.Paths
 import java.util.stream.Collectors
 
 /**
- * Created by qwerty on 1. 5. 2017.
+ * Application class
  */
 class Main : Application() {
 
@@ -35,6 +35,9 @@ class Main : Application() {
         loadFromFile(DEVICE_LIST_FILE)
     }
 
+    /**
+     * Creates view for adding new device
+     */
     private fun bottomGrid() : GridPane {
         val grid = GridPane()
 
@@ -89,10 +92,16 @@ class Main : Application() {
         super.stop()
     }
 
+    /**
+     * Saves device list from file
+     */
     private fun  saveToFile(filename: String) {
         Files.write(Paths.get(filename), table.items.stream().map { node -> "${node.ip.value};${node.community.value}" }.collect(Collectors.joining("\n")).lines(), Charset.forName("UTF-8"))
     }
 
+    /**
+     * Loads device list from file
+     */
     private fun  loadFromFile(filename: String) {
         try {
             val lines = Files.readAllLines(Paths.get(filename))
@@ -105,10 +114,8 @@ class Main : Application() {
         }
     }
 
-
+    // program execution
     companion object {
-
-
         @JvmStatic fun main(vararg args: String) {
             Application.launch(Main::class.java, *args)
         }
