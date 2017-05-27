@@ -7,15 +7,10 @@ import javafx.scene.control.cell.TextFieldTableCell
 import javafx.util.Callback
 import javafx.util.StringConverter
 import java.net.InetAddress
-import java.nio.file.Files
-import java.nio.file.Paths
-
 
 /**
- * Created by qwerty on 1. 5. 2017.
+ * Class representing one device, ip and dns value are binded
  */
-
-
 class NetworkNode(_address: String, var _community: String) {
     // var address = SimpleStringProperty()
 
@@ -53,9 +48,8 @@ class NetworkNode(_address: String, var _community: String) {
 
         })
     }
-
+    // changing values
     fun parseNewAddress(s: String) {
-        parseValues = false
         ip.value = s
         dns.value = s
     }
@@ -81,11 +75,8 @@ fun getDNS(s : String) : String {
     }
 }
 
-
+// initial values
 val inserts = FXCollections.observableArrayList<NetworkNode>(arrayListOf())
-
-
-var parseValues = false
 
 class NetworkTable : TableView<NetworkNode>() {
 
@@ -143,23 +134,25 @@ class NetworkTable : TableView<NetworkNode>() {
 
     }
 
+    // action of opening
     private fun  openTree(address: String?, community: String?) {
         if (address==null) return
         val treeWindow = TreeWindow(address)
         treeWindow.show()
         //treeWindow.insertNodesFromString(java.lang.String.join("\n", Files.readAllLines(Paths.get("doc/swkralovicka43_snmpwalk_v2.txt"))))
-
-
-        var consoleOutput = ""
         val console = ConsoleWindow()
         console.scene.window.x = treeWindow.scene.window.x + 200
         console.scene.window.y = treeWindow.scene.window.y + 200
-        // aby nestartli hned nad sebou
+        // windows doesnt strat on top of each other
         console.show()
-        console.runTaskWithOutput(listOf(SNMP_WALK_BINARY_PATH, "-v", "2c", "-c", community!!, address!!),{
-            consoleOutput = it
+        console.runTaskWithOutput(listOf(SNMP_WALK_BINARY_PATH, "-v", "2c", "-c", community!!, address),{
             console.close()
-            treeWindow.insertNodesFromString(consoleOutput)
+            if (it == null || it.isEmpty()) {
+                alert(Alert.AlertType.ERROR,"Error processing SNMP","","Target device doesn't support snmp or is unavalaible").showAndWait()
+                treeWindow.close()
+            } else {
+                treeWindow.insertNodesFromString(it)
+            }
         })
 
 

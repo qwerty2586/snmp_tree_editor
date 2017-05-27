@@ -9,12 +9,11 @@ import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
-import java.io.OutputStream
 import kotlinx.coroutines.experimental.javafx.JavaFx as UI
 
 
 /**
- * Created by qwerty on 7. 5. 2017.
+ * Console window, contains text area, where is redirected program output
  */
 
 
@@ -27,7 +26,7 @@ class ConsoleWindow : Stage() {
         scene = Scene(borderPane,700.0,500.0)
     }
 
-    fun runTaskWithOutput(program: List<String>, afterTaskJob: (output : String) -> Unit) {
+    fun runTaskWithOutput(program: List<String>, afterTaskJob: (output : String?) -> Unit) {
         textArea.clear()
         title = "Console Window - " + program.joinToString(" ")
         async(CommonPool) {
@@ -36,21 +35,24 @@ class ConsoleWindow : Stage() {
             val reader = BufferedReader(InputStreamReader(process.inputStream))
             while (process.isAlive) {
                 val string = reader.readLine()
-                launch(UI) { textArea.appendText("${string}\n")}
+                launch(UI) { if (string!=null) textArea.appendText("${string}\n")}
             }
+
+            // zpracuje zbytek retezce
+            do {
+                val string = reader.readLine()
+                launch(UI) {
+                    if (string != null && string.isNotEmpty()) textArea.appendText("${string}\n")
+
+                }
+            } while (string != null);
             launch(UI) {
                 afterTaskJob(textArea.text)
             }
+
+
         }
 
     }
-
-    class MyOutputStream(var textArea: TextArea) : OutputStream(){
-
-        override fun write(b: Int) {
-            textArea.appendText(b.toChar().toString())
-        }
-    }
-
 
 }

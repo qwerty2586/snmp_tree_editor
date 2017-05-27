@@ -9,10 +9,9 @@ import javafx.stage.Stage
 import kotlinx.coroutines.experimental.javafx.JavaFx as UI
 
 /**
- * Created by qwerty on 7. 5. 2017.
+ * Window with value tree
+ * Constructor have one parameter which is used as root element of tree
  */
-
-
 class TreeWindow(deviceName: String) : Stage() {
     val borderPane = BorderPane()
     val tree = TreeView<SnmpNode>()
@@ -31,6 +30,9 @@ class TreeWindow(deviceName: String) : Stage() {
         scene = Scene(borderPane, 700.0, 500.0)
     }
 
+    /**
+     * Create descpription based on current selected
+     */
     private fun  createDescription(): String? {
         val selection = tree.selectionModel.selectedItem?.value
 
@@ -44,30 +46,38 @@ class TreeWindow(deviceName: String) : Stage() {
         return output
     }
 
+    /**
+     * Parse snmpwalk output and put Nodes to tree structure
+     */
     fun insertNodesFromString(consoleOutput: String) {
-        val lines = consoleOutput.split("\n")
+        // split by \n but only if outside of quotes
+        val lines = consoleOutput.split(Regex("(?=(?:(?:[^\"]*\"){2})*[^\"]*$)\\n"))
         for (line in lines) {
-            val parts = line.split("=")
-            val path = parts.first().trim().replace("::", ".")
-            val valueparts = parts.last().trim().split(":")
+            if ("\"" == line || line.isEmpty()) continue
+            val firstEqualsSign = line.indexOf('=');
+            if (firstEqualsSign == -1) continue
+            val leftPart = line.substring(0,firstEqualsSign)
+            val rightPart = line.substring(firstEqualsSign+1)
+
+            val path = leftPart.trim().replace("::", ".")
+            val valueparts = rightPart.trim().split(":")
             val valueType = valueparts.first().trim()
-            println(line)
+
             val value = valueparts.last().trim()
             val pathParts = path.split(".")
             val locPath = pathParts.last()
 
-            val snmpNode = SnmpNode(path, true, locPath, value, valueType)
+            // leafnode will be added to tree after finding apropriate parent in tree
+            val leafNode = SnmpNode(path, true, locPath, value, valueType)
 
             var node = root
-
-
             var level = 0
             var pathPrefix = ""
             for (part in pathParts) {
                 level++
                 pathPrefix = "$pathPrefix${if (level>1) "." else ""}$part"
                 if (level == pathParts.count()) {
-                    node.children.add(TreeItem(snmpNode))
+                    node.children.add(TreeItem(leafNode))
                 } else {
                     val nodes = node.children
                     var isThere = false
@@ -78,6 +88,7 @@ class TreeWindow(deviceName: String) : Stage() {
                             break
                         }
                     }
+                    // didnt find node -> creating
                     if (!isThere) {
                         val newNode = TreeItem(SnmpNode(pathPrefix, false, part, "", ""))
                         node.children.add(newNode)
@@ -90,6 +101,9 @@ class TreeWindow(deviceName: String) : Stage() {
         root.isExpanded = true
     }
 
+    /**
+     * Recursively join nodes with only one child, simplifiing tree in process
+     */
     private fun optimizeItem(node: TreeItem<SnmpNode>) {
         while (node.children.count() == 1) {
             val item = node.children[0].value
@@ -99,15 +113,9 @@ class TreeWindow(deviceName: String) : Stage() {
             node.children.remove(node.children[0])
             node.children.addAll(backup)
         }
-
         node.children.forEach { optimizeItem(it) }
     }
-
-    private fun addSnmpNode(snmpNode: SnmpNode) {
-
-    }
 }
-
 class SnmpTreeCell : TreeCell<SnmpNode>() {
     override fun updateItem(item: SnmpNode?, empty: Boolean) {
         super.updateItem(item, empty)
@@ -115,7 +123,8 @@ class SnmpTreeCell : TreeCell<SnmpNode>() {
     }
 }
 
-class SnmpNode(var path: String, var leaf: Boolean, var locPath: String, var value: String, var type: String) {
-
-}
+/**
+ * Data representation of single Node
+ */
+class SnmpNode(var path: String, var leaf: Boolean, var locPath: String, var value: String, var type: String)
 

@@ -49,7 +49,7 @@
  ![pred](./doc/screenshots/pre_optimization.png)  |  ![po](./doc/screenshots/post_optimization.png)
                             
                                    
-### Co Chybi dodelat          
+### Co chybi dodelat          
   
   - dodatecne info v hlavnim okne
      * ping
