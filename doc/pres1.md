@@ -78,20 +78,20 @@ jiny priklad
 ### Hlavni okno
 V hlavnim okne muzeme sledovat aktivitu zarizeni muzeme pridavat mazat editovat a zobrazit
 
-![obrazek hlavniho okna](./doc/hlavni_okno.png)
+![obrazek hlavniho okna](../doc/hlavni_okno.png)
 
 
 ### Okno se stromem
 
 umozni prochazet stromovou strukturou
 
-![obrazek okna_se_stromem](./doc/okno_se_stromem.png)
+![obrazek okna_se_stromem](../doc/okno_se_stromem.png)
 
 ### Editacni okno
 
 umozni menit koncovou hodnotu
 
-![obrazek okna_se_stromem](./doc/editacni_okno.png)
+![obrazek okna_se_stromem](../doc/editacni_okno.png)
 
 
 
