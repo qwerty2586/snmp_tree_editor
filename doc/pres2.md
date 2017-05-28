@@ -32,11 +32,11 @@
 
  ##### beh konzole   
 
- ![beh_konzole](./doc/screenshots/console_run.png)
+ ![beh_konzole](../doc/screenshots/console_run.png)
  
  #### po nacteni stromu
  
- ![strom_a_hlavni_okno](./doc/screenshots/tree_and_main.png)
+ ![strom_a_hlavni_okno](../doc/screenshots/tree_and_main.png)
  
                                    
 ### optimalizace stromu       
@@ -46,7 +46,7 @@
  
  Pred optimalizaci          |  Po optimalizaci
  :-------------------------:|:-------------------------:
- ![pred](./doc/screenshots/pre_optimization.png)  |  ![po](./doc/screenshots/post_optimization.png)
+ ![pred](../doc/screenshots/pre_optimization.png)  |  ![po](../doc/screenshots/post_optimization.png)
                             
                                    
 ### Co chybi dodelat          
