@@ -9,6 +9,8 @@ Vaším úkolem bude vytvořit aplikaci s GUI, na kterém si vyzkoušíte využi
 ## Výběr tématu
 
 //TODO 
+## Uživatelská příručka
+
 
 
 ## Prezentace
@@ -20,6 +22,9 @@ Vaším úkolem bude vytvořit aplikaci s GUI, na kterém si vyzkoušíte využi
 ## Testovaní
 
 [Návod pro testery](doc/test_manual.md)
+
+[Reporty testerů](doc/test_reports)
+
 
 ## Závěr
 Aplikace není ve finální podobě chybí jí možnost editace. Přesto splňuje požadavky zadání.

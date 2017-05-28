@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="snmp_tree_editor:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/snmp_tree_editor_jar</output-path>
+    <root id="archive" name="snmp_tree_editor.jar">
+      <element id="module-output" name="snmp_tree_editor" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.1.1/98e484e67f913e934559f7f55f0c94be5593f03c/kotlin-stdlib-1.1.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-javafx/0.14/44c45d7f493f7e093271ba70a8f361b175a76acb/kotlinx-coroutines-javafx-0.14.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/0.14/7cf86d32f4c72a42d7d317c763c33b035f08bad7/kotlinx-coroutines-core-0.14.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-runtime/1.1.1/c65604aa7f90ce813f75baab82f91b88315e1179/kotlin-runtime-1.1.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
