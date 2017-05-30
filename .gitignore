@@ -3,6 +3,5 @@
 .gradletasknamecache
 .gradle/
 build/
-bin/
 
 .devicelist

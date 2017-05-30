@@ -60,8 +60,13 @@ class NetworkNode(_address: String, var _community: String) {
 fun getIP(s : String) : String {
     if (s == "") return ""
     try {
-        return InetAddress.getByName(s).hostAddress
+        // informing user because it can take some time
+        mainStage?.title = "Resolving IP from $s"
+        val r = InetAddress.getByName(s).hostAddress
+        mainStage?.title = MAIN_TITLE
+        return r
     } catch (e : Exception) {
+        mainStage?.title = MAIN_TITLE
         return s
     }
 }
@@ -69,8 +74,13 @@ fun getIP(s : String) : String {
 fun getDNS(s : String) : String {
     if (s == "") return ""
     try {
-        return InetAddress.getByName(s).hostName
+        // informing user because it can take some time
+        mainStage?.title = "Resolving DNS from $s"
+        val r = InetAddress.getByName(s).hostName
+        mainStage?.title = MAIN_TITLE
+        return r
     } catch (e : Exception) {
+        mainStage?.title = MAIN_TITLE
         return s
     }
 }
@@ -104,6 +114,7 @@ class NetworkTable : TableView<NetworkNode>() {
 
         items.addAll(inserts)
 
+        selectionModel.selectionMode = SelectionMode.MULTIPLE
 
         rowFactory = Callback<TableView<NetworkNode>, TableRow<NetworkNode>> {
             val row = TableRow<NetworkNode>()
@@ -154,8 +165,12 @@ class NetworkTable : TableView<NetworkNode>() {
                 treeWindow.insertNodesFromString(it)
             }
         })
+    }
 
-
+    fun openTreeButtonClicked() {
+        selectionModel.selectedItems.forEach {
+            openTree(it?.ip?.value,it?.community?.value)
+        }
     }
 
 

@@ -20,6 +20,8 @@ kotlin {
     }
 }
 
+
+
 sourceSets {
     main {
         kotlin {
@@ -42,6 +44,14 @@ dependencies {
     compile "org.jetbrains.kotlinx:kotlinx-coroutines-javafx:0.14"
     testCompile 'junit:junit:4.11'
     testCompile "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}
+jar {
+    manifest {
+        attributes 'Main-Class': 'Main'
+
+    }
+
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 task wrapper(type: Wrapper) {
