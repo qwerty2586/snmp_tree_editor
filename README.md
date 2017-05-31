@@ -40,6 +40,10 @@ Dvojklikem na řádek mužeme u zařízení spustit čtení souboru.
 Tato akce otevře dvě okna. V jednom běží výstup konzole v druhé čeká na doběhnutí prvního a potom se v něm expanduje strom. 
 Proklikáváním stromu lze číst hodnoty položek.
 
+Program po si po vypnutí pamatuje přidaná zařízení a uloží je do souboru .devicelist
+
+Pro vyzkoušení čtení snmp je na server minemax.cz spuštěn server pro čtení pod komunitou public.
+
 ## Programátorská příručka
 
 Rozhodl jsem se pro implementaci využít jazyk kotlin, který je kompatibilní s JVM a tedy i JavaFX.
@@ -73,7 +77,6 @@ Na základě zpráv jsem opravil následující:
  - po přidání zařízení se obsah textového pole smaže a tím zabraní vícenásobnému kliknutí
  - při přidání, změně se změní záhlaví okna na resolving IP.../resolving DNS...
  - doplnil jsem se uživatelskou příručku o pasáž s instalací snmp-tools
- 
 
 ## Závěr
 Aplikace není ve finální podobě, chybí jí možnost editace. Přesto splňuje požadavky zadání(Tři okna, tabulka a Strom).
